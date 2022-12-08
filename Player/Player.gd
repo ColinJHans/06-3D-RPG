@@ -1,6 +1,7 @@
 extends KinematicBody
 
 onready var Camera = get_node("/root/Game/Player/Pivot/Camera")
+onready var Pivot = get_node("/root/Game/Player/Pivot")
 
 var velocity = Vector3()
 var gravity = -9.8
@@ -9,6 +10,8 @@ var max_speed = 4
 
 var mouse_sensitivity = .002
 
+
+var target = null
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -29,9 +32,16 @@ func _physics_process(_delta):
 	$AnimationTree.set("parameters/Idle_Run/blend_amount",current_speed/max_speed)
 	velocity = move_and_slide(velocity,Vector3.UP,true)
 	
+	if Input.is_action_just_pressed("shoot") and target != null and target.is_in_group("Target"):
+		target.die()
+		
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * mouse_sensitivity)
+		Pivot.rotate_x(event.relative.y * mouse_sensitivity)
+		Pivot.rotation_degrees.x = clamp(Pivot.rotation_degrees.x,-45,30)
+
+
 func get_input():
 	var input_dir = Vector3()
 	if Input.is_action_pressed("forward"):
