@@ -16,9 +16,12 @@ Basic 3D Third Person Shooter
 + Terrain: https://www.patreon.com/posts/blender-export-16916038
 + Gun: https://kenney.nl/assets/blaster-kit
 + Music: https://pixabay.com/music/beats-goldn-116392/
++ Gunshot: Lucas Demoya
+
 ## Future Development
 + Moving and shooting animation, I tried and got close but couldnt figure out how to return to normal animations when finished
 + more levels
 + more diverse enemies
+
 ## Created by
 Colin Hans
