@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Terrain.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://UI/UI.gd" type="Script" id=8]
 [ext_resource path="res://Drone/Drone.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Player/Health.gd" type="Script" id=10]
+[ext_resource path="res://Assets/goldn-116392.mp3" type="AudioStream" id=11]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 1, 0, 0, 1 )
@@ -153,6 +154,11 @@ script = ExtResource( 10 )
 
 [node name="Drone" parent="Drone_container" instance=ExtResource( 9 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 20, 100 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -15.0
+autoplay = true
 
 [connection signal="body_entered" from="NPC/Area" to="NPC" method="_on_Area_body_entered"]
 [connection signal="body_exited" from="NPC/Area" to="NPC" method="_on_Area_body_exited"]

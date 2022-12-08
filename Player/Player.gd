@@ -37,6 +37,7 @@ func _physics_process(_delta):
 	
 	if Input.is_action_just_pressed("shoot"):
 		$AnimationTree.active = false
+		$Gunshot.play()
 		$AnimationPlayer.play("Shoot")
 		if target != null and target.is_in_group("Target"):
 			target.die()
