@@ -1,9 +1,11 @@
 extends CanvasLayer
+export var healing = .0001
+func _physics_process(_delta):
+	if $Damage.color.a> 0:
+		$Damage.color.a -=healing
 
-
-func _ready():
-	pass
-
+func add_damage(d):
+	$Damage.color.a = clamp($Damage.color.a + d, 0 ,1)
 
 func _on_Timer_timeout():
 	if Global.timer > 0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Terrain.tscn" type="PackedScene" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://NPC/NPC.gd" type="Script" id=6]
 [ext_resource path="res://UI/Dialogue.gd" type="Script" id=7]
 [ext_resource path="res://UI/UI.gd" type="Script" id=8]
+[ext_resource path="res://Drone/Drone.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Player/Health.gd" type="Script" id=10]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 1, 0, 0, 1 )
@@ -25,10 +27,17 @@ height = 1.0
 [sub_resource type="SphereShape" id=3]
 radius = 5.0
 
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.207843, 0.32549, 0.0392157, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
 [node name="Game" type="Spatial"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.0228269, 0, -0.999739, 0, 1, 0, 0.999739, 0, -0.0228269, 41.3762, 0, 15.9749 )
+transform = Transform( -0.0228269, 0, -0.999739, 0, 1, 0, 0.999739, 0, -0.0228269, 41.3762, 0.200362, 15.9749 )
+collision_layer = 2
+collision_mask = 7
 
 [node name="Pivot" type="Position3D" parent="Player"]
 
@@ -73,12 +82,20 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5797, 0.566305, 1.65323 )
 script = ExtResource( 6 )
 
 [node name="Area" type="Area" parent="NPC"]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="NPC/Area"]
 shape = SubResource( 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 8 )
+healing = 0.001
+
+[node name="Damage" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 0, 0, 0 )
 
 [node name="Background" type="ColorRect" parent="UI"]
 anchor_right = 1.0
@@ -121,6 +138,21 @@ anchor_bottom = 1.0
 margin_top = -20.0
 margin_bottom = 10.0
 bbcode_enabled = true
+
+[node name="Health" type="ProgressBar" parent="UI"]
+margin_left = 251.0
+margin_right = 763.0
+margin_bottom = 30.0
+custom_styles/fg = SubResource( 4 )
+custom_styles/bg = SubResource( 5 )
+max_value = 3.0
+value = 3.0
+script = ExtResource( 10 )
+
+[node name="Drone_container" type="Spatial" parent="."]
+
+[node name="Drone" parent="Drone_container" instance=ExtResource( 9 )]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 20, 100 )
 
 [connection signal="body_entered" from="NPC/Area" to="NPC" method="_on_Area_body_entered"]
 [connection signal="body_exited" from="NPC/Area" to="NPC" method="_on_Area_body_exited"]
